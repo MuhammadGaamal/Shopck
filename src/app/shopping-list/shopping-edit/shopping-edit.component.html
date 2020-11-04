@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!--we get rid of the local references and the click method in the add button instead we use ngSubmit in the form and use local reference to access js Object-->
+    <form (ngSubmit)="onSubmit(lf)" #lf="ngForm">
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="name">Name</label>
+<!--          register the controls with ngModel and add validation with required-->
+          <input type="text" id="name" class="form-control" name="name" ngModel required>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="amount">Amount</label>
+          <!-- checking user input against regular expressions using pattern validator for a user to enter a number greater than zero-->
+          <input type="number" id="amount" class="form-control"  name="amount" ngModel required pattern="^[1-9]+[0-9]*$">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+<!--          disable submit button if the form is invalid and change the button from Update to Add-->
+          <button class="btn btn-success" type="submit" [disabled]="!lf.valid">{{editMode ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
+          <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
