@@ -1,0 +1,76 @@
+<!--form created using reactive approach-->
+<div class="row">
+  <div class="col-xs-12">
+<!--    we tell angular this form is managed by us and angular shouldn't manage it instead it should take our form-->
+    <form [formGroup]= "recipeform" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+<!--          save editing the recipe-->
+          <button type="submit" class="btn btn-success" [disabled]="!recipeform.valid">Save</button>
+<!--          cancel editing the recipe-->
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+<!--      user enter a title-->
+      <div class="row">
+        <div class="clo-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName = "name" class="form-control">
+          </div>
+        </div>
+      </div>
+<!--      user enter an image-->
+      <div class="row">
+        <div class="clo-xs-12">
+          <div class="form-group">
+            <label for="imagepath">Image URL</label>
+            <input type="text" id="imagepath" formControlName = "imagepath" class="form-control" #imagePath>
+          </div>
+        </div>
+      </div>
+<!--      user see the image as a preview-->
+      <div class="row">
+        <div class="clo-xs-12">
+          <img [src] = "imagePath.value" class="img-responsive">
+        </div>
+      </div>
+<!--      description of the recipe-->
+      <div class="row">
+        <div class="clo-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" id="description" formControlName = "description" class="form-control" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+<!--        active ingredients in my recipe form-->
+        <div class="clo-xs-12" formArrayName="ingredients">
+<!--          having multiple ingredients-->
+          <div class="row"  *ngFor="let ingredientCtrl of getControls(); let i = index" [formGroupName]="i"
+          style="margin-top: 10px">
+<!--            name of the ingredient-->
+            <div class="col-xs-8">
+              <input type="text" formControlName="name" class="form-control">
+            </div>
+<!--            hold the amount-->
+            <div class="col-xs-2">
+              <input type="number" formControlName="amount" class="form-control">
+            </div>
+<!--            button to allow me delete an ingredient-->
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(i)">X</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-success" (click)="onAddIngredient()">Add Ingredient</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
